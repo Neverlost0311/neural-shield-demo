@@ -1,0 +1,155 @@
+:root {
+  --neuro-bg: #0b0f14;
+  --neuro-accent: #00e6c3;
+  --neon: rgba(0, 230, 195, 0.9);
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(0, 230, 195, 0.15);
+  --header-height: 70px;
+  --text-main: #e2e8f0;
+  --text-dim: #94a3b8;
+  --font-display: 'Orbitron', sans-serif;
+  --font-mono: 'Share Tech Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--neuro-bg);
+  color: var(--text-main);
+  font-family: 'Rajdhani', sans-serif;
+  overflow: hidden;
+  background-image: 
+      radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px;
+}
+
+/* --- LAYOUT --- */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px; /* Ops | Diagnostics */
+  height: calc(100vh - var(--header-height));
+  gap: 16px;
+  padding: 16px;
+}
+
+
+.neuro-header {
+  height: var(--header-height);
+  min-height: var(--header-height);
+}
+
+#neural-ops {
+  #neural-ops {
+  background:
+    radial-gradient(circle at center, rgba(0,230,195,0.08), transparent 60%),
+    rgba(0,0,0,0.4);
+}
+
+}
+
+
+#diagnostics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+/* --- COMPONENTS --- */
+.brand {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  color: #fff;
+}
+.brand span { color: var(--neuro-accent); }
+
+.status-badge {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--neuro-accent);
+  border: 1px solid var(--neuro-accent);
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+/* Monitor/Iframe Wrapper */
+.monitor-frame {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+iframe.vrm-view {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Glass Panels (Modules) */
+.glass-panel {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  padding: 16px;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  position: relative;
+}
+/* Module Header Layout */
+.glass-panel .module-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 6px;
+}
+.glass-panel h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  color: #fff;
+}
+.glass-panel p {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Icons */
+.icon-box {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--neuro-accent);
+}
+.text-purple-400 { color: #a855f7; }
+.text-green-400 { color: #4ade80; }
+.text-blue-400 { color: #3b82f6; }
+
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+@keyframes pulse { 50% { opacity: .5; } }
+
+/* Mobile Response */
+@media (max-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    height: auto;
+    overflow-y: auto;
+  }
+  #neural-ops {
+    height: 60vh;
+  }
+}
