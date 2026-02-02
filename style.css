@@ -1,155 +1,251 @@
-:root {
+/* style.css — Neural Ops Console UI
+   Replace existing style.css or create a new file.
+*/
+
+/* =========================
+   THEME VARIABLES
+   ========================= */
+:root{
   --neuro-bg: #0b0f14;
-  --neuro-accent: #00e6c3;
-  --neon: rgba(0, 230, 195, 0.9);
-  --glass: rgba(255, 255, 255, 0.04);
-  --glass-border: rgba(0, 230, 195, 0.15);
-  --header-height: 70px;
-  --text-main: #e2e8f0;
-  --text-dim: #94a3b8;
-  --font-display: 'Orbitron', sans-serif;
-  --font-mono: 'Share Tech Mono', monospace;
+  --panel-bg: rgba(6,10,18,0.75);
+  --glass: rgba(255,255,255,0.03);
+  --glass-border: rgba(0,230,195,0.06);
+  --accent: #00e6c3;
+  --accent-2: #22c55e;
+  --muted: #94a3b8;
+  --card-radius: 12px;
+  --header-h: 68px;
+  --max-width: 1200px;
+  --mono: "Rajdhani", Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --display: "Orbitron", var(--mono);
+  --card-pad: 16px;
 }
 
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  background-color: var(--neuro-bg);
-  color: var(--text-main);
-  font-family: 'Rajdhani', sans-serif;
-  overflow: hidden;
-  background-image: 
-      radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
-      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 40px 40px, 40px 40px;
+/* =========================
+   RESET & BASE
+   ========================= */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  min-height:100%;
+  background: linear-gradient(180deg,#07101a 0%, var(--neuro-bg) 80%);
+  color:#e6eef1;
+  font-family:var(--mono);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
 }
 
-/* --- LAYOUT --- */
-.dashboard-grid {
-  display: grid;
+/* =========================
+   LAYOUT GRID
+   ========================= */
+.dashboard-grid{
+  display:grid;
   grid-template-columns: 1fr 360px; /* Ops | Diagnostics */
-  height: calc(100vh - var(--header-height));
-  gap: 16px;
-  padding: 16px;
+  grid-template-rows: var(--header-h) 1fr;
+  gap:18px;
+  height: calc(100vh - 20px);
+  padding: 12px;
+  padding-top: 18px;
+  align-items:start;
 }
 
-
-.neuro-header {
-  height: var(--header-height);
-  min-height: var(--header-height);
+/* =========================
+   HEADER
+   ========================= */
+.neuro-header{
+  grid-column: 1 / -1;
+  height: var(--header-h);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 0 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+  background: linear-gradient(90deg, rgba(8,10,14,0.4), rgba(12,15,20,0.45));
+  backdrop-filter: blur(6px) saturate(120%);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.4) inset;
 }
 
-#neural-ops {
-  #neural-ops {
-  background:
-    radial-gradient(circle at center, rgba(0,230,195,0.08), transparent 60%),
-    rgba(0,0,0,0.4);
+.brand{
+  font-family:var(--display);
+  font-weight:700;
+  letter-spacing:2px;
+  color:#bfeee2;
+  font-size:20px;
+}
+.brand span{ color: var(--accent); margin-left:6px; }
+
+/* status badge */
+.status-badge{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border: 1px solid rgba(255,255,255,0.03);
+  padding:8px 12px;
+  border-radius:8px;
+  background: rgba(0,0,0,0.35);
+  font-size:13px;
+  color:var(--accent);
+}
+.status-badge small{ color:var(--muted); margin-left:8px; font-size:11px; }
+
+/* =========================
+   NEURAL OPS (3D iframe)
+   ========================= */
+#neural-ops{
+  grid-column: 1 / 2;
+  grid-row: 2;
+  height: calc(100vh - var(--header-h) - 56px);
+  padding: 18px;
+  overflow: hidden;
+}
+.panel-ops{
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.18));
+  border: 1px solid rgba(255,255,255,0.02);
+  padding: 0;
+  display:flex;
+  flex-direction:column;
 }
 
+/* monitor frame that contains the iframe */
+.monitor-frame{
+  width:100%;
+  height:100%;
+  position:relative;
+  border-radius: 10px;
+  overflow:hidden;
+  background: linear-gradient(180deg, #071019, #041018);
+  box-shadow: inset 0 0 80px rgba(0,0,0,0.6);
 }
 
-
-#diagnostics-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  overflow-y: auto;
-  padding-right: 4px;
+/* the actual iframe */
+iframe.vrm-view{
+  width:100%;
+  height:100%;
+  border:0;
+  display:block;
+  background: #020617;
 }
 
-/* --- COMPONENTS --- */
-.brand {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  letter-spacing: 2px;
-  color: #fff;
-}
-.brand span { color: var(--neuro-accent); }
-
-.status-badge {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--neuro-accent);
-  border: 1px solid var(--neuro-accent);
-  padding: 4px 8px;
-  border-radius: 4px;
-  text-transform: uppercase;
+/* subtle horizontal scanlines for vibe (pointer-events: none so iframe still usable) */
+.monitor-frame::before{
+  content:'';
+  position:absolute; inset:0;
+  background-image: linear-gradient(transparent 92%, rgba(0,230,195,0.02) 92%);
+  background-size: 100% 28px;
+  pointer-events:none;
+  mix-blend-mode: overlay;
 }
 
-/* Monitor/Iframe Wrapper */
-.monitor-frame {
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-iframe.vrm-view {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
-}
-
-/* Glass Panels (Modules) */
-.glass-panel {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  padding: 16px;
+/* small caption bottom-left */
+.viewport-caption{
+  position:absolute;
+  left:18px;
+  bottom:14px;
+  background: rgba(0,0,0,0.45);
+  padding: 8px 12px;
   border-radius: 8px;
-  backdrop-filter: blur(8px);
-  position: relative;
-}
-/* Module Header Layout */
-.glass-panel .module-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid var(--glass-border);
-  padding-bottom: 6px;
-}
-.glass-panel h3 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  color: #fff;
-}
-.glass-panel p {
-  font-size: 0.8rem;
-  color: var(--text-dim);
-  margin: 0;
-  line-height: 1.4;
+  font-size: 12px;
+  color: var(--muted);
+  pointer-events:none;
 }
 
-/* Icons */
-.icon-box {
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--neuro-accent);
+/* =========================
+   DIAGNOSTICS SIDEBAR
+   ========================= */
+#diagnostics-grid{
+  grid-column: 2 / 3;
+  grid-row: 2;
+  height: calc(100vh - var(--header-h) - 56px);
+  padding-right: 6px;
+  overflow-y: auto;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:stretch;
 }
-.text-purple-400 { color: #a855f7; }
-.text-green-400 { color: #4ade80; }
-.text-blue-400 { color: #3b82f6; }
 
-.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-@keyframes pulse { 50% { opacity: .5; } }
+/* cards */
+.diag-card{
+  background: linear-gradient(180deg, rgba(12,16,20,0.6), rgba(9,12,14,0.5));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--card-radius);
+  padding: var(--card-pad);
+  box-shadow: 0 6px 16px rgba(1,6,8,0.25);
+}
+.module-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border-bottom:1px solid rgba(255,255,255,0.02);
+  padding-bottom:8px;
+  margin-bottom:8px;
+}
+.module-header h3{
+  margin:0;
+  font-family:var(--display);
+  font-size:13px;
+  letter-spacing:1px;
+  color:#dfeff0;
+  text-transform:uppercase;
+}
+.icon-box{
+  width:36px; height:36px;
+  display:flex; align-items:center; justify-content:center;
+  background: rgba(0,0,0,0.25);
+  border-radius:8px;
+  color:var(--accent);
+  font-size:16px;
+}
+.icon-box.text-purple{ color:#a855f7; }
+.icon-box.text-green{ color:#7ef3b8; }
+.icon-box.text-blue{ color:#63aaf4; }
 
-/* Mobile Response */
-@media (max-width: 1024px) {
-  .dashboard-grid {
+.diag-card p{ color:var(--muted); margin:0; font-size:13px; line-height:1.4; padding-top:4px; }
+
+/* progress row */
+.progress-row{ display:flex; align-items:center; gap:10px; margin-top:12px; }
+.progress-bar{ flex:1; height:8px; background:rgba(255,255,255,0.03); border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.02); }
+.progress-fill{ height:100%; background: linear-gradient(90deg,#a855f7,#7c3aed); width:40%; }
+
+/* small status card */
+.status-small .muted{ color:var(--muted); font-size:13px; }
+.mini-bars{ width:54px; display:flex; gap:6px; align-items:end; }
+.mini-bars span{ display:block; width:8px; height:12px; background:var(--accent-2); border-radius:2px; animation: pulseBar 1.2s infinite ease-in-out; transform-origin:bottom center; }
+.mini-bars span:nth-child(2){ animation-delay:0.15s }
+.mini-bars span:nth-child(3){ animation-delay:0.3s }
+
+@keyframes pulseBar {
+  0%{ transform: scaleY(0.6) }
+  50%{ transform: scaleY(1.1) }
+  100%{ transform: scaleY(0.6) }
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+.neuro-footer{
+  grid-column: 1 / -1;
+  color:var(--muted);
+  font-size:12px;
+  padding: 12px 18px;
+  text-align:center;
+  opacity:0.9;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 1024px){
+  .dashboard-grid{
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: var(--header-h) auto auto;
     height: auto;
-    overflow-y: auto;
   }
-  #neural-ops {
-    height: 60vh;
-  }
+  #diagnostics-grid{ order: 3; height:auto; padding: 12px; }
+  #neural-ops{ grid-row:2; height:60vh; padding:12px; }
 }
+
+/* small helper to ensure iframe inherits focus styles nicely */
+iframe:focus{ outline: none; }

@@ -1,92 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEURO-SHIELD OS | Advanced Interface</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Neural Shield — Ops Console</title>
+
+  <!-- Fonts + icons (safe CDN usage) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Local styles -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header class="neuro-header" role="banner" aria-label="Neural Shield header">
+    <div class="brand" aria-hidden="true">NEURO<span>SHIELD</span></div>
 
-    <header class="neuro-header">
-        <div class="brand">NEURO<span>SHIELD</span></div>
-        <div class="status-badge"><i class="fa-solid fa-wifi"></i> SYSTEM ONLINE v2.4</div>
-    </header>
+    <div class="header-right">
+      <div class="status-badge" id="global-status">
+        <i class="fa-solid fa-wifi"></i>
+        <span>SYSTEM ONLINE</span>
+        <small>v2.4</small>
+      </div>
+    </div>
+  </header>
 
-    <main class="dashboard-grid">
-        <!-- OPS SECTION: VRM View -->
-        <section id="neural-ops">
-            <div class="monitor-frame">
-                <iframe 
-                    src="demo.html" 
-                    class="vrm-view"
-                    allow="fullscreen" 
-                    loading="lazy"
-                    title="Neural Shield 3D Reference">
-                </iframe>
-            </div>
-        </section>
+  <main class="dashboard-grid" role="main">
+    <!-- Ops: 3D view (iframe to demo.html) -->
+    <section id="neural-ops" class="panel-ops" aria-label="Neural Operations (3D view)">
+      <div class="monitor-frame" role="region" aria-label="3D model viewport">
+        <!-- IMPORTANT: demo.html kept exactly as-is (VRM + three.js logic lives there) -->
+        <iframe class="vrm-view" src="demo.html" title="Neural Shield 3D viewport" allow="fullscreen" loading="lazy"></iframe>
 
-        <!-- DIAGNOSTICS SECTION -->
-        <aside id="diagnostics-grid">
-            
-            <!-- Active Threat Detection -->
-            <div class="glass-panel">
-                <div class="module-header">
-                    <div class="icon-box"><i class="fa-solid fa-radar"></i></div>
-                    <h3>Active Threat Detection</h3>
-                </div>
-                <p>Our AI monitors neural traffic in real-time, instantly isolating malicious packets before they reach the cortex.</p>
-            </div>
+        <!-- small hint / caption -->
+        <div class="viewport-caption">Use mouse drag to rotate the model. Zoom and pan are locked for consistent inspection.</div>
+      </div>
+    </section>
 
-            <!-- Bio-Auth Lock -->
-            <div class="glass-panel">
-                <div class="module-header">
-                    <div class="icon-box"><i class="fa-solid fa-fingerprint text-purple-400"></i></div>
-                    <h3>Bio-Auth Lock</h3>
-                </div>
-                <p style="margin-bottom:8px;">DNA-coded access control ensures only the patient can modify implant settings.</p>
-                <div style="width:100%; height:4px; background:#1e293b; border-radius:2px;">
-                    <div style="width:75%; height:100%; background:#a855f7;" class="animate-pulse"></div>
-                </div>
-                <div style="text-align:right; font-size:0.7em; color:#a855f7; margin-top:4px; font-family:var(--font-mono);">SECURE</div>
-            </div>
+    <!-- Diagnostics sidebar -->
+    <aside id="diagnostics-grid" class="panel-diag" aria-label="Diagnostics and system modules">
+      <div class="diag-card">
+        <div class="module-header">
+          <div class="icon-box"><i class="fa-solid fa-shield-virus"></i></div>
+          <h3>Active Threat Detection</h3>
+        </div>
+        <p>Our AI monitors neural traffic in real-time, instantly isolating malicious packets before they reach the cortex.</p>
+      </div>
 
-            <!-- Firmware Integrity -->
-            <div class="glass-panel">
-                <div class="module-header">
-                    <div class="icon-box"><i class="fa-solid fa-link text-green-400"></i></div>
-                    <h3>Firmware Integrity</h3>
-                </div>
-                <p>Checks implant hash against the manufacturer blockchain to detect jailbreaks.</p>
-            </div>
+      <div class="diag-card">
+        <div class="module-header">
+          <div class="icon-box text-purple"><i class="fa-solid fa-fingerprint"></i></div>
+          <h3>Bio-Auth Lock</h3>
+        </div>
+        <p>DNA-coded access control ensures only the patient can modify implant settings.</p>
+        <div class="progress-row">
+          <div class="progress-bar"><div class="progress-fill" style="width:82%"></div></div>
+          <div class="progress-status">SECURE</div>
+        </div>
+      </div>
 
-            <!-- Forensic Logging -->
-            <div class="glass-panel">
-                <div class="module-header">
-                    <div class="icon-box"><i class="fa-solid fa-database text-blue-400"></i></div>
-                    <h3>Forensic Logging</h3>
-                </div>
-                <p>Immutable history of all external connection attempts for legal verification.</p>
-            </div>
+      <div class="diag-card">
+        <div class="module-header">
+          <div class="icon-box text-green"><i class="fa-solid fa-link"></i></div>
+          <h3>Firmware Integrity</h3>
+        </div>
+        <p>Checks implant hash against the manufacturer blockchain to detect jailbreaks.</p>
+      </div>
 
-            <!-- System Status -->
-            <div class="glass-panel" style="display:flex; justify-content:space-between; align-items:center;">
-                <div>
-                    <h3>System Status</h3>
-                    <p class="text-green-400" style="margin-top:4px;">ALL SYSTEMS OPERATIONAL</p>
-                </div>
-                <div style="display:flex; gap:2px;">
-                    <div style="width:4px; height:16px; background:#4ade80;" class="animate-pulse"></div>
-                    <div style="width:4px; height:16px; background:#4ade80; animation-delay:0.1s" class="animate-pulse"></div>
-                    <div style="width:4px; height:16px; background:#4ade80; animation-delay:0.2s" class="animate-pulse"></div>
-                </div>
-            </div>
+      <div class="diag-card">
+        <div class="module-header">
+          <div class="icon-box text-blue"><i class="fa-solid fa-database"></i></div>
+          <h3>Forensic Logging</h3>
+        </div>
+        <p>Immutable history of external connection attempts for legal verification.</p>
+      </div>
 
-        </aside>
-    </main>
+      <div class="diag-card status-small">
+        <div class="module-header">
+          <div class="icon-box"><i class="fa-solid fa-wave-square"></i></div>
+          <h3>System Status</h3>
+        </div>
+        <p class="muted">ALL SYSTEMS OPERATIONAL</p>
+        <div class="mini-bars">
+          <span style="--i:0"></span><span style="--i:1"></span><span style="--i:2"></span>
+        </div>
+      </div>
+    </aside>
+  </main>
 
+  <footer class="neuro-footer" role="contentinfo">
+    <div>NEURO-SHIELD OS © <span id="year"></span> • Secure • Encrypted</div>
+  </footer>
+
+  <script>
+    // tiny helper: year
+    document.getElementById('year').innerText = new Date().getFullYear();
+  </script>
 </body>
 </html>
