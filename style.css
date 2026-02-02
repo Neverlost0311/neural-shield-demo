@@ -249,3 +249,43 @@ iframe.vrm-view{
 
 /* small helper to ensure iframe inherits focus styles nicely */
 iframe:focus{ outline: none; }
+.diag-card.active {
+  border-color: var(--neuro-accent);
+  box-shadow: 0 0 20px rgba(0, 230, 195, 0.25);
+  transform: translateY(-2px);
+}
+
+
+.ops-overlay {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.75);
+  border: 1px solid var(--glass-border);
+  padding: 16px 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  max-width: 360px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.ops-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+.ops-overlay h2 {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--neuro-accent);
+}
+
+.ops-overlay p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+
